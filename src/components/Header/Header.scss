@@ -1,4 +1,22 @@
-.header{
-    border: 2px solid red;
-    height: 6rem;
+@use "../../assets/sass/_variables.scss" as *;
+
+.header-section{
+    height: 100%;
+    padding: 1rem 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: $colour-header;
+
+    font-family: $font-title;
+    font-size: 1.5rem;
+}
+
+@media screen and (min-width: 992px){
+    .header-section{
+        height: 12.5vh;
+        font-size: 2rem;
+    }
 }

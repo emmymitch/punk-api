@@ -1,3 +1,10 @@
-h2{
-    border: 2px solid blue;
+@use "../../assets/sass/_variables.scss" as *;
+
+.nav-section{
+    height: 87.5vh;
+    padding: 1rem;
+
+    background-color:$colour-nav;
+
+    line-height: 200%;
 }
