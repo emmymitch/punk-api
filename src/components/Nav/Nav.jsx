@@ -3,7 +3,7 @@ import { useState } from "react";
 import SearchBox from "../SearchBox/SearchBox";
 import Filter from "../Filter/Filter";
 
-const Nav = ({searchTerm, handleSearchInput, handleABVCheck, handleAcidityCheck, handleBitterCheck}) => {
+const Nav = ({searchTerm, handleSearchInput, handleABVCheck, handleAcidityCheck, handleBitterCheck, handleClassicCheck}) => {
 
     return(
         <div className="nav-section">
@@ -13,7 +13,7 @@ const Nav = ({searchTerm, handleSearchInput, handleABVCheck, handleAcidityCheck,
 
             <p>Filters:</p>
             <Filter filterLabel="High Alcohol Content (ABV > 6%) "  handleFilter={handleABVCheck} />
-            {/* <Filter filterLabel="Classic Range (First brewed before 2010) " handleFilter={handleFilter} /> */}
+            <Filter filterLabel="Classic Range (First brewed before 2010) " handleFilter={handleClassicCheck} />
             <Filter filterLabel="High Acidity (pH < 4) "  handleFilter={handleAcidityCheck} />
             <Filter filterLabel="Bitter (IBU > 45) "  handleFilter={handleBitterCheck} />
         </div>

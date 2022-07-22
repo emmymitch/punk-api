@@ -21,18 +21,35 @@ const App = () => {
   const checkBeerFilter = () => {
     noFilter = false;
 
-    if (searchTerm != ""){
-      filteredBeers = beers.filter((beer) => {return beer.name.toLowerCase().includes(searchTerm)});
-    } else if (ABVFilter){
-      filteredBeers = beers.filter((beer) => {return beer.abv > 6});
-    } else if (classicFilter){
-      filteredBeers = beers.filter((beer) => {return beer.first_brewed > 6});
+    // let checks = [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter];
+    // let activeFilters = [];
+    // checks.forEach((check) => {
+    //   if (check == true){
+    //     activeFilters.push(check);
+    //   }
+    // })
+    // if (activeFilters.length <= 1){
+    //   filteredBeers = [...beers];
+    // }
+
+    if (ABVFilter){
+      filteredBeers = filteredBeers.filter((beer) => {return beer.abv > 6});
     } else if (acidityFilter){
-      filteredBeers = beers.filter((beer) => {return beer.ph < 4});
+      filteredBeers = filteredBeers.filter((beer) => {return beer.ph < 4});
     } else if (bitterFilter){
-      filteredBeers = beers.filter((beer) => {return beer.ibu > 45});
+      filteredBeers = filteredBeers.filter((beer) => {return beer.ibu > 45});
+    } else if (classicFilter){
+      filteredBeers = filteredBeers.filter((beer) => {
+        const brewed = beer.first_brewed;
+        const year = brewed.slice(brewed.length-4, brewed.length) //gets year off end of string
+        return (year < 2010);
+      });
     } else {
       noFilter = true;
+    }
+
+    if (searchTerm != ""){
+      filteredBeers = filteredBeers.filter((beer) => {return beer.name.toLowerCase().includes(searchTerm)});
     }
 
     return filteredBeers;
@@ -58,7 +75,12 @@ const App = () => {
     checkBeerFilter();
   }
 
+  const handleClassicCheck = (event) => {
+    setClassicFilter(!classicFilter);
+    checkBeerFilter();
+  }
 
+  
   checkBeerFilter();
 
   return (
@@ -71,14 +93,11 @@ const App = () => {
         handleABVCheck={handleABVCheck} 
         handleAcidityCheck={handleAcidityCheck}
         handleBitterCheck={handleBitterCheck}
+        handleClassicCheck={handleClassicCheck}
       />
 
       <div className='cards-section cards-section__background'>
-        {searchTerm && <BeerCard beerList={filteredBeers}/>}
-        {ABVFilter && <BeerCard beerList={filteredBeers} />}
-        {acidityFilter && <BeerCard beerList={filteredBeers} />}
-        {bitterFilter && <BeerCard beerList={filteredBeers} />}
-        {noFilter && <BeerCard beerList={filteredBeers} />}
+        {(searchTerm || ABVFilter || acidityFilter || bitterFilter || classicFilter || noFilter) && <BeerCard beerList={filteredBeers} />}
       </div>
     </div>
   );
