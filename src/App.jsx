@@ -4,9 +4,10 @@ import Nav from './components/Nav/Nav';
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="app">
       <Header />
       <Nav />
+      <div className='cards-section'></div>
     </div>
   );
 }

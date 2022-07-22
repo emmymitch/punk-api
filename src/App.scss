@@ -1,4 +1,33 @@
-.App {
+@use "./assets/sass/_variables.scss" as *;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: 
+    "head head"
+    "navi cards"
+  ;
+
+  font-family: $font-body;
   text-align: center;
+  color: $colour-black;
+
+  .header-section{
+    grid-area: head;
+  }
+
+  .nav-section{
+    grid-area: navi;
+  }
+
+  .cards-section{
+    grid-area: cards;
+  }
 }
 
