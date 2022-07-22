@@ -1,0 +1,15 @@
+@use "../../assets/sass/_variables.scss" as *;
+
+.search-box {
+  &__input {
+    margin: 1.25rem 0;
+    padding: 0.25rem;
+    border: 0.125rem $colour-card solid;
+    color: $colour-black;
+
+    &:focus {
+      border: 0.125rem $colour-card-top solid;
+      outline: 0.125rem $colour-card-top solid;
+    }
+  }
+}
