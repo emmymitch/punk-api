@@ -5,32 +5,63 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 .app {
-  display: grid;
-  grid-template-columns: 20% 80%;
-  grid-template-areas: 
-    "head head"
-    "navi cards"
-  ;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   font-family: $font-body;
   text-align: center;
   color: $colour-black;
-
-  .header-section{
-    grid-area: head;
-    z-index: 1;
-  }
-
+  
   .nav-section{
-    grid-area: navi;
+    width: 100%;
+    height: auto;
     z-index: 2;
   }
 
   .cards-section{
-    grid-area: cards;
+    width: 100%;
+    padding: 0.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
     background-image: url("./assets/images/ice-cubes.jpg");
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .app {
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-template-areas: 
+      "head head"
+      "navi cards"
+    ;
+
+    font-family: $font-body;
+    text-align: center;
+    color: $colour-black;
+
+    .header-section{
+      grid-area: head;
+      z-index: 1;
+    }
+
+    .nav-section{
+      grid-area: navi;
+      z-index: 2;
+
+      height: 87.5vh;
+    }
+
+    .cards-section{
+      grid-area: cards;
+      justify-content: space-between;
+      height: 87.5vh;
+    }
   }
 }
 
