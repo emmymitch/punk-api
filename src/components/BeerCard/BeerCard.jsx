@@ -15,10 +15,10 @@ const BeerCard = ({beerList}) => {
 
         return(
             <div key={beer.id} className="beer-card">
-                <h1 className="beer-card__name">{beer.name}</h1>
+                <h2 className="beer-card__name">{beer.name}</h2>
 
                 <div className="beer-card__scroll-section">
-                    <h2 className="beer-card__tagline">{tagline}</h2>
+                    <h3 className="beer-card__tagline">{tagline}</h3>
                     <img className="beer-card__img" src={beer.image_url} alt={beer.name} />
                     
                     <div className="beer-card__content">

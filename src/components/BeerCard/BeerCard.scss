@@ -23,6 +23,11 @@
 
     &__name{
         background-color: $colour-card-top;
+        font-size: 1.75rem;
+    }
+
+    &__tagline{
+        font-style: italic;
     }
 
     &__img{
