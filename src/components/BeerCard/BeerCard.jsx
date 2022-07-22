@@ -4,7 +4,7 @@ const BeerCard = ({beerList}) => {
     const cardsToShow = beerList.map((beer) => {
 
         let tagline = beer.tagline;
-        if (tagline[tagline.length -1] == "."){
+        if (tagline[tagline.length -1] === "."){
             tagline = tagline.slice(0, tagline.length -1);
         }
         

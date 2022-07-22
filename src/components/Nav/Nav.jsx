@@ -1,5 +1,4 @@
 import "./Nav.scss";
-import { useState } from "react";
 import SearchBox from "../SearchBox/SearchBox";
 import Filter from "../Filter/Filter";
 

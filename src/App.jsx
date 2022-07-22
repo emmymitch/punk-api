@@ -48,7 +48,7 @@ const App = () => {
       noFilter = true;
     }
 
-    if (searchTerm != ""){
+    if (searchTerm !== ""){
       filteredBeers = filteredBeers.filter((beer) => {return beer.name.toLowerCase().includes(searchTerm)});
     }
 
