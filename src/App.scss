@@ -25,12 +25,14 @@
   
   .nav-section{
     width: 100%;
+    min-height: none;
     height: auto;
     z-index: 2;
   }
 
   .cards-section{
     width: 100%;
+    min-height: none;
     padding: 0.5rem;
 
     display: flex;
@@ -64,6 +66,7 @@
       grid-area: navi;
       z-index: 2;
 
+      min-height: 87.5vh;
       height: 100%;
     }
 
