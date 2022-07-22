@@ -1,0 +1,10 @@
+@use "../../assets/sass/_variables.scss" as *;
+
+.beer-card{
+    width: 20rem;
+    height: 27rem;
+
+    margin: 1rem;
+
+    background-color: aqua;
+}
