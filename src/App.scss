@@ -20,14 +20,19 @@
 
   .header-section{
     grid-area: head;
+    z-index: 1;
   }
 
   .nav-section{
     grid-area: navi;
+    z-index: 2;
   }
 
   .cards-section{
     grid-area: cards;
+
+    background-image: url("./assets/images/ice-cubes.jpg");
+    filter: brightness(0.8) saturate(0);
   }
 }
 
