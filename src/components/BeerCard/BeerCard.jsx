@@ -8,8 +8,8 @@ const BeerCard = ({beerList}) => {
             tagline = tagline.slice(0, tagline.length -1);
         }
         
-        const foodPairings = beer.food_pairing.map((food) => {
-            return <li>{food}</li>;
+        const foodPairings = beer.food_pairing.map((food, index) => {
+            return <li key={food}>{food}</li>;
         });
 
 
@@ -22,7 +22,7 @@ const BeerCard = ({beerList}) => {
                     <img className="beer-card__img" src={beer.image_url} alt={beer.name} />
                     
                     <div className="beer-card__content">
-                        <p><span className="bold">ABV:</span>{beer.abv} <span className="bold">pH:</span>{beer.ph} <span className="bold">IBU:</span>{beer.ibu}</p>
+                        <p><span className="bold">ABV:</span>{beer.abv}% <span className="bold">pH:</span>{beer.ph} <span className="bold">IBU:</span>{beer.ibu}</p>
                         <p><span className="bold">First Brewed:</span>{beer.first_brewed}</p>
                         <p>{beer.description}</p>
                         <br />

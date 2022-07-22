@@ -9,7 +9,7 @@
     flex-direction: column;
     align-items: center;
 
-    background-color: aqua;
+    background-color: $colour-card;
     text-overflow: clip;
 
     & * {
@@ -17,21 +17,13 @@
         width: 100%;
     }
 
-    .bold{
-        font-weight: 600;
-    }
-
     &__scroll-section{
         overflow-y: scroll;
     }
 
     &__name{
-        background-color: darkblue;
+        background-color: $colour-card-top;
     }
-
-    // &__tagline{
-
-    // }
 
     &__img{
         height: 50%;
@@ -47,5 +39,4 @@
             }
         }
     }
-
 }
