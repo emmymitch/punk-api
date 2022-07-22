@@ -34,4 +34,15 @@
         width: auto;
     }
 
+    &__content{
+        &--food-pairings{
+            text-align: left;
+
+            p{
+                font-weight: 600;
+                line-height: 0.0625rem;
+            }
+        }
+    }
+
 }
