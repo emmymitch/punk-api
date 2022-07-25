@@ -1,12 +1,11 @@
 import './App.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
 import BeerCardsContainer from './components/BeerCardsContainer/BeerCardsContainer';
 
-import beers from "./data/beers.js";
-let filteredBeers = [...beers];
+import beersdata from "./data/beers.js";
 
 const App = () => {
   //Set initial states
@@ -15,10 +14,26 @@ const App = () => {
   const [acidityFilter, setAcidityFilter] = useState(false);
   const [bitterFilter, setBitterFilter] = useState(false);
   const [classicFilter, setClassicFilter] = useState(false);
- 
+  const [beers, setBeers] = useState(beersdata); //as backup, use provided data file
 
+
+  //API Fetch Request
+  const getBeers = async() => {
+    const response = await fetch("https://api.punkapi.com/v2/beers");
+    setBeers(await response.json());
+  };
+
+  //Run these funcs on load
+  useEffect(() => {
+    getBeers();
+    checkBeerFilter();
+  });
+
+  let filteredBeers = [...beers];
+
+
+  //Filters function
   const checkBeerFilter = () => {
-
     //Check for multiple filters
     let checks = [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter];
     let activeFilters = [];
@@ -63,6 +78,8 @@ const App = () => {
     return filteredBeers;
   }
   
+
+  //Event functions
   const handleSearchInput = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
     checkBeerFilter();
@@ -88,8 +105,10 @@ const App = () => {
     checkBeerFilter();
   }
 
-  
-  checkBeerFilter();
+  // const handleFilter = (setFilter, filter) => {
+  //   setFilter(!filter);
+  //   checkBeerFilter;
+  // }
 
   return (
     <div className="app">
@@ -105,6 +124,7 @@ const App = () => {
       />
 
       <BeerCardsContainer
+        fullList={beers}
         beerList={filteredBeers}
         searchTerm={searchTerm} 
         ABVFilter={ABVFilter} 

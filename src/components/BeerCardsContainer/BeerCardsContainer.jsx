@@ -1,7 +1,6 @@
 import BeerCard from "../BeerCard/BeerCard";
-import beers from "../../data/beers";
 
-const BeerCardsContainer = ({beerList, searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter}) => {
+const BeerCardsContainer = ({fullList, beerList, searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter}) => {
 
     if(searchTerm || ABVFilter || acidityFilter || bitterFilter || classicFilter){
         return(      
@@ -13,7 +12,7 @@ const BeerCardsContainer = ({beerList, searchTerm, ABVFilter, acidityFilter, bit
     } else{
         return(
             <section className='cards-section'>
-                <BeerCard beerList={beers} />
+                <BeerCard beerList={fullList} />
             </section>
         )
     }
