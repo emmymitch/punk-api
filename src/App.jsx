@@ -3,49 +3,57 @@ import { useState } from 'react';
 
 import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
-import BeerCard from "./components/BeerCard/BeerCard";
+import BeerCardsContainer from './components/BeerCardsContainer/BeerCardsContainer';
 
 import beers from "./data/beers.js";
-
+let filteredBeers = [...beers];
 
 const App = () => {
+  //Set initial states
   const [searchTerm, setSearchTerm] = useState("");
   const [ABVFilter, setABVFilter] = useState(false);
-  const [classicFilter, setClassicFilter] = useState(false);
   const [acidityFilter, setAcidityFilter] = useState(false);
   const [bitterFilter, setBitterFilter] = useState(false);
-
-  let filteredBeers = [...beers];
-  let noFilter = false;
+  const [classicFilter, setClassicFilter] = useState(false);
+ 
 
   const checkBeerFilter = () => {
-    noFilter = false;
 
-    // let checks = [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter];
-    // let activeFilters = [];
-    // checks.forEach((check) => {
-    //   if (check == true){
-    //     activeFilters.push(check);
-    //   }
-    // })
-    // if (activeFilters.length <= 1){
-    //   filteredBeers = [...beers];
-    // }
+    //Check for multiple filters
+    let checks = [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter];
+    let activeFilters = [];
 
+    checks.forEach((check) => {
+      if (check === true){
+        activeFilters.push(check);
+      }
+    })
+
+    //If no filters active, use original beer list
+    if (activeFilters.length <= 1){
+      filteredBeers = [...beers];
+    }
+
+    //Filters & Search
+    //All separate so multiple can be applied at once
     if (ABVFilter){
       filteredBeers = filteredBeers.filter((beer) => {return beer.abv > 6});
-    } else if (acidityFilter){
+    }
+
+    if (acidityFilter){
       filteredBeers = filteredBeers.filter((beer) => {return beer.ph < 4});
-    } else if (bitterFilter){
+    } 
+
+    if (bitterFilter){
       filteredBeers = filteredBeers.filter((beer) => {return beer.ibu > 45});
-    } else if (classicFilter){
+    } 
+
+    if (classicFilter){
       filteredBeers = filteredBeers.filter((beer) => {
         const brewed = beer.first_brewed;
         const year = brewed.slice(brewed.length-4, brewed.length) //gets year off end of string
         return (year < 2010);
       });
-    } else {
-      noFilter = true;
     }
 
     if (searchTerm !== ""){
@@ -60,22 +68,22 @@ const App = () => {
     checkBeerFilter();
   }
 
-  const handleABVCheck = (event) => {
+  const handleABVCheck = () => {
     setABVFilter(!ABVFilter);
     checkBeerFilter();
   }
 
-  const handleAcidityCheck = (event) => {
+  const handleAcidityCheck = () => {
     setAcidityFilter(!acidityFilter);
     checkBeerFilter();
   }
 
-  const handleBitterCheck = (event) => {
+  const handleBitterCheck = () => {
     setBitterFilter(!bitterFilter);
     checkBeerFilter();
   }
 
-  const handleClassicCheck = (event) => {
+  const handleClassicCheck = () => {
     setClassicFilter(!classicFilter);
     checkBeerFilter();
   }
@@ -96,9 +104,15 @@ const App = () => {
         handleClassicCheck={handleClassicCheck}
       />
 
-      <div className='cards-section cards-section__background'>
-        {(searchTerm || ABVFilter || acidityFilter || bitterFilter || classicFilter || noFilter) && <BeerCard beerList={filteredBeers} />}
-      </div>
+      <BeerCardsContainer
+        beerList={filteredBeers}
+        searchTerm={searchTerm} 
+        ABVFilter={ABVFilter} 
+        acidityFilter={acidityFilter} 
+        bitterFilter={bitterFilter} 
+        classicFilter={classicFilter}
+      />
+
     </div>
   );
 }
