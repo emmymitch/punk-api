@@ -5,7 +5,9 @@ import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
 import BeerCardsContainer from './components/BeerCardsContainer/BeerCardsContainer';
 
-import beersdata from "./data/beers.js";
+//import beersdata from "./data/beers.js";
+//let beers = [];
+//let filteredBeers = [];
 
 const App = () => {
   //Set initial states
@@ -14,68 +16,57 @@ const App = () => {
   const [acidityFilter, setAcidityFilter] = useState(false);
   const [bitterFilter, setBitterFilter] = useState(false);
   const [classicFilter, setClassicFilter] = useState(false);
-  const [beers, setBeers] = useState(beersdata); //as backup, use provided data file
 
-
-  //API Fetch Request
-  const getBeers = async() => {
-    const response = await fetch("https://api.punkapi.com/v2/beers");
-    setBeers(await response.json());
-  };
-
-  //Run these funcs on load
-  useEffect(() => {
-    getBeers();
-    checkBeerFilter();
-  });
-
-  let filteredBeers = [...beers];
+  const [beers, setBeers] = useState([]);
+  const [filteredBeers, setFilteredBeers] = useState([]);
 
 
   //Filters function
   const checkBeerFilter = () => {
+
     //Check for multiple filters
-    let checks = [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter];
-    let activeFilters = [];
-
-    checks.forEach((check) => {
-      if (check === true){
-        activeFilters.push(check);
+    let dataChecks = [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter];
+    
+    for (let i=dataChecks.length; i>=0; i--){
+      if (!dataChecks[i]){
+        dataChecks.splice(i, 1);
       }
-    })
-
-    //If no filters active, use original beer list
-    if (activeFilters.length <= 1){
-      filteredBeers = [...beers];
     }
+
+    //If no or single filter active, use original beer list
+    if (dataChecks.length < 1){
+      setFilteredBeers(beers);
+    };
+
 
     //Filters & Search
     //All separate so multiple can be applied at once
+    //Also checks whether a beer actually has a property
     if (ABVFilter){
-      filteredBeers = filteredBeers.filter((beer) => {return beer.abv > 6});
+      setFilteredBeers(filteredBeers.filter((beer) => {return (beer.abv && beer.abv > 6)}));
     }
 
     if (acidityFilter){
-      filteredBeers = filteredBeers.filter((beer) => {return beer.ph < 4});
+      setFilteredBeers(filteredBeers.filter((beer) => {return (beer.ph && beer.ph < 4)}));
     } 
 
     if (bitterFilter){
-      filteredBeers = filteredBeers.filter((beer) => {return beer.ibu > 45});
+      setFilteredBeers(filteredBeers.filter((beer) => {return (beer.ibu && beer.ibu > 45)}));
     } 
 
     if (classicFilter){
-      filteredBeers = filteredBeers.filter((beer) => {
+      setFilteredBeers(filteredBeers.filter((beer) => {
         const brewed = beer.first_brewed;
         const year = brewed.slice(brewed.length-4, brewed.length) //gets year off end of string
-        return (year < 2010);
-      });
+        return (beer.first_brewed && year < 2010);
+      }));
     }
 
     if (searchTerm !== ""){
-      filteredBeers = filteredBeers.filter((beer) => {return beer.name.toLowerCase().includes(searchTerm)});
+      setFilteredBeers(filteredBeers.filter((beer) => {return beer.name.toLowerCase().includes(searchTerm)}));
     }
 
-    return filteredBeers;
+    return;
   }
   
 
@@ -110,6 +101,21 @@ const App = () => {
   //   checkBeerFilter;
   // }
 
+  //API Fetch Request
+  const getBeers = async () => {
+    const response = await fetch("https://api.punkapi.com/v2/beers");
+    setBeers(await response.json());
+    checkBeerFilter();
+  };
+
+  //Run this func on first render only
+  useEffect(() => {
+    getBeers();
+    checkBeerFilter();
+  // eslint-disable-next-line
+  }, [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter]);
+
+
   return (
     <div className="app">
       <Header />
@@ -123,7 +129,7 @@ const App = () => {
         handleClassicCheck={handleClassicCheck}
       />
 
-      <BeerCardsContainer
+      {beers && <BeerCardsContainer
         fullList={beers}
         beerList={filteredBeers}
         searchTerm={searchTerm} 
@@ -131,7 +137,7 @@ const App = () => {
         acidityFilter={acidityFilter} 
         bitterFilter={bitterFilter} 
         classicFilter={classicFilter}
-      />
+      />}
 
     </div>
   );
