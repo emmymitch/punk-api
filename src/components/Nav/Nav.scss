@@ -4,8 +4,19 @@
     height: 100%;
     padding: 1rem;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     background-color:$colour-nav;
     color: $colour-white;
 
     line-height: 200%;
+
+    .filter-list{
+        & *{
+            display: flex;
+            justify-content: space-between;
+        }
+    }
 }
