@@ -1,6 +1,6 @@
 import "./SortBox.scss";
 
-const SortBox = ({options, sortBy}) => {
+const SortBox = ({options, sort, label}) => {
 
     const optionList = options.map((option) => {
         return <option className="sort-box__option" value={option}>{option}</option>
@@ -8,8 +8,8 @@ const SortBox = ({options, sortBy}) => {
 
     return (
         <form className="sort-box">
-            <label htmlFor="sorting"><span className="bold sort-box__label">Sort by:</span></label>
-            <select className="sort-box__list" onChange={sortBy} name="sorting">
+            <label htmlFor={label}><span className="bold sort-box__label">{label}</span></label>
+            <select className="sort-box__list" onChange={sort} name={label}>
                 {optionList}
             </select>
         </form>

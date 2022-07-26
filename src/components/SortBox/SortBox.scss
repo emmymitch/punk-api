@@ -6,7 +6,7 @@
     }
 
     &__list {
-        margin: 0.75rem 0.5rem 1.25rem 0.5rem;
+        margin: 0 0.5rem 0 0.5rem;
         padding: 0.25rem;
         width: 10rem;
 
@@ -15,8 +15,8 @@
         color: $colour-black;
 
         &:focus {
-        border: 0.125rem $colour-card-top solid;
-        outline: 0.125rem $colour-card-top solid;
+            border: 0.125rem $colour-card-top solid;
+            outline: 0.125rem $colour-card-top solid;
         }
     }
 }
