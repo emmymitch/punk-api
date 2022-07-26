@@ -15,6 +15,7 @@
   text-align: center;
   color: $colour-black;
 
+  //Separate class for bold as <b> is too bold
   .bold{
     font-weight: 600;
   }

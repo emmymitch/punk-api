@@ -3,7 +3,7 @@
 .beer-card{
     width: 17rem;
     height: 27rem;
-    margin: 0.5rem;
+    margin: 0.8rem;
 
     display: flex;
     flex-direction: column;
@@ -19,6 +19,16 @@
 
     &__scroll-section{
         overflow-y: scroll;
+        scrollbar-color: $colour-card-top;
+        scrollbar-width: thin;
+
+        &::-webkit-scrollbar{
+            width: 7.5px;
+        }
+
+        &::-webkit-scrollbar-thumb{
+            background-color: rgba($colour-card-top, 0.5);
+        }
     }
 
     &__name{

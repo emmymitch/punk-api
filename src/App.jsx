@@ -5,113 +5,48 @@ import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
 import BeerCardsContainer from './components/BeerCardsContainer/BeerCardsContainer';
 
-//import beersdata from "./data/beers.js";
-//let beers = [];
-//let filteredBeers = [];
 
 const App = () => {
   //Set initial states
+  const [filteredBeers, setFilteredBeers] = useState([]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [ABVFilter, setABVFilter] = useState(false);
   const [acidityFilter, setAcidityFilter] = useState(false);
   const [bitterFilter, setBitterFilter] = useState(false);
   const [classicFilter, setClassicFilter] = useState(false);
 
-  const [beers, setBeers] = useState([]);
-  const [filteredBeers, setFilteredBeers] = useState([]);
 
+  //Filter event functions
+  const handleSearchInput = (event) => {setSearchTerm(event.target.value.toLowerCase())}
+  const handleABVCheck = () => {setABVFilter(!ABVFilter)};
+  const handleAcidityCheck = () => {setAcidityFilter(!acidityFilter)};
+  const handleBitterCheck = () => {setBitterFilter(!bitterFilter)};
+  const handleClassicCheck = () => {setClassicFilter(!classicFilter)};
 
-  //Filters function
-  const checkBeerFilter = () => {
-
-    //Check for multiple filters
-    let dataChecks = [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter];
-    
-    for (let i=dataChecks.length; i>=0; i--){
-      if (!dataChecks[i]){
-        dataChecks.splice(i, 1);
-      }
-    }
-
-    //If no or single filter active, use original beer list
-    if (dataChecks.length < 1){
-      setFilteredBeers(beers);
-    };
-
-
-    //Filters & Search
-    //All separate so multiple can be applied at once
-    //Also checks whether a beer actually has a property
-    if (ABVFilter){
-      setFilteredBeers(filteredBeers.filter((beer) => {return (beer.abv && beer.abv > 6)}));
-    }
-
-    if (acidityFilter){
-      setFilteredBeers(filteredBeers.filter((beer) => {return (beer.ph && beer.ph < 4)}));
-    } 
-
-    if (bitterFilter){
-      setFilteredBeers(filteredBeers.filter((beer) => {return (beer.ibu && beer.ibu > 45)}));
-    } 
-
-    if (classicFilter){
-      setFilteredBeers(filteredBeers.filter((beer) => {
-        const brewed = beer.first_brewed;
-        const year = brewed.slice(brewed.length-4, brewed.length) //gets year off end of string
-        return (beer.first_brewed && year < 2010);
-      }));
-    }
-
-    if (searchTerm !== ""){
-      setFilteredBeers(filteredBeers.filter((beer) => {return beer.name.toLowerCase().includes(searchTerm)}));
-    }
-
-    return;
-  }
-  
-
-  //Event functions
-  const handleSearchInput = (event) => {
-    setSearchTerm(event.target.value.toLowerCase());
-    checkBeerFilter();
-  }
-
-  const handleABVCheck = () => {
-    setABVFilter(!ABVFilter);
-    checkBeerFilter();
-  }
-
-  const handleAcidityCheck = () => {
-    setAcidityFilter(!acidityFilter);
-    checkBeerFilter();
-  }
-
-  const handleBitterCheck = () => {
-    setBitterFilter(!bitterFilter);
-    checkBeerFilter();
-  }
-
-  const handleClassicCheck = () => {
-    setClassicFilter(!classicFilter);
-    checkBeerFilter();
-  }
-
-  // const handleFilter = (setFilter, filter) => {
-  //   setFilter(!filter);
-  //   checkBeerFilter;
-  // }
 
   //API Fetch Request
-  const getBeers = async () => {
-    const response = await fetch("https://api.punkapi.com/v2/beers");
-    setBeers(await response.json());
-    checkBeerFilter();
+  const getBeers = async (searchTerm, abvVal, ph, ibu, classicDate) => {
+    const params = [];
+
+    //If filters on, add appropriate parameter to API request
+    if (searchTerm){params.push(`&beer_name=${searchTerm}`)}
+    if (ABVFilter){params.push(`&abv_gt=${abvVal}`)};
+    if (bitterFilter){params.push(`&ibu_gt=${ibu}`)};
+    if (classicFilter){params.push(`&brewed_before=${classicDate}`)};
+
+    const response = await fetch(`https://api.punkapi.com/v2/beers?${params.join("")}`);
+    setFilteredBeers(await response.json());
+
+    //pH filter not available in API so manually filter results
+    if (acidityFilter){
+      setFilteredBeers(filteredBeers.filter((beer) => {return (beer.ph && beer.ph < ph)}));
+    }
   };
 
-  //Run this func on first render only
+  //Run this func on first render and whenever a filter is toggled
   useEffect(() => {
-    getBeers();
-    checkBeerFilter();
+    getBeers(searchTerm, 6, 4, 45, "01-2010");
   // eslint-disable-next-line
   }, [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter]);
 
@@ -129,15 +64,7 @@ const App = () => {
         handleClassicCheck={handleClassicCheck}
       />
 
-      {beers && <BeerCardsContainer
-        fullList={beers}
-        beerList={filteredBeers}
-        searchTerm={searchTerm} 
-        ABVFilter={ABVFilter} 
-        acidityFilter={acidityFilter} 
-        bitterFilter={bitterFilter} 
-        classicFilter={classicFilter}
-      />}
+      <BeerCardsContainer beerList={filteredBeers} />
 
     </div>
   );
