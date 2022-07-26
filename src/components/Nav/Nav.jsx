@@ -20,7 +20,7 @@ const Nav = ({searchTerm, handleSearchInput, handleABVCheck, handleAcidityCheck,
 
             <div className="sort-list">
                 <SortBox label="Sort by:" sort={sortBy} options={["", "Alphabetical", "ABV", "First Brewed", "IBU", "pH"]} />
-                <SortBox label="Direction:" sort={sortDirection} options={["Highest - Lowest", "Lowest - Highest"]} />
+                <SortBox label="Direction:" sort={sortDirection} options={["Lowest - Highest", "Highest - Lowest"]} />
             </div>
 
         </div>
