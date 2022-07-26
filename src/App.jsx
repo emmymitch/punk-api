@@ -34,8 +34,8 @@ const App = () => {
 
     if (sort === "Alphabetical"){
       sortedBeers = sortedBeers.sort((a, b) => {
-        let name1 = a.name.toLowerCase();
-        let name2 = b.name.toLowerCase();
+        const name1 = a.name.toLowerCase();
+        const name2 = b.name.toLowerCase();
         if (name1 < name2){
           return -1;
         } else if (name1 > name2){
@@ -46,8 +46,12 @@ const App = () => {
       })
       
     } else if (sort === "First Brewed"){
-      //"MM-YYYY"
-      console.log("Not just yet");
+      sortedBeers = sortedBeers.sort((a, b) => {
+        //Convert first_brewed string into readable format for Date (YYYY, MM)
+        const date1 = new Date(a.first_brewed.slice(3), a.first_brewed.slice(0, 2));
+        const date2 = new Date(b.first_brewed.slice(3), b.first_brewed.slice(0, 2));
+        return date1 - date2;
+      })
       
     } else if (sort !== ""){
       const lowercaseSort = sort.toLowerCase();
@@ -80,6 +84,7 @@ const App = () => {
       sortBeers(filteredBeers);
     }
 
+    //By default, API gives lowest-highest
     if(sortDirection === "Highest - Lowest"){
       setFilteredBeers([...filteredBeers.reverse()]);
     }
