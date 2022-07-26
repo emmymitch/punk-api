@@ -15,6 +15,7 @@ const App = () => {
   const [acidityFilter, setAcidityFilter] = useState(false);
   const [bitterFilter, setBitterFilter] = useState(false);
   const [classicFilter, setClassicFilter] = useState(false);
+  const [sort, setSort] = useState("");
 
 
   //Filter event functions
@@ -23,6 +24,39 @@ const App = () => {
   const handleAcidityCheck = () => {setAcidityFilter(!acidityFilter)};
   const handleBitterCheck = () => {setBitterFilter(!bitterFilter)};
   const handleClassicCheck = () => {setClassicFilter(!classicFilter)};
+  
+  const handleSort = (event) => {setSort(event.target.value)};
+
+  const sortFunction = (inputArray) => {
+    let sortedBeers = [...inputArray]
+
+    if (sort === ""){
+      return setFilteredBeers(sortedBeers);
+
+    } else if (sort === "Alphabetical"){
+      sortedBeers = sortedBeers.sort((a, b) => {
+        let name1 = a.name.toLowerCase();
+        let name2 = b.name.toLowerCase();
+        if (name1 < name2){
+          return -1;
+        } else if (name1 > name2){
+          return 1;
+        } else{
+          return 0;
+        };
+      })
+      return setFilteredBeers(sortedBeers);
+
+    } else if (sort === "First Brewed"){
+      //"MM-YYYY"
+      console.log("Not just yet");
+      return setFilteredBeers(sortedBeers);
+
+    } else {
+      const lowercaseSort = sort.toLowerCase();
+      return setFilteredBeers(sortedBeers.sort((a, b) => a[lowercaseSort] - b[lowercaseSort]));
+    }
+  }
 
 
   //API Fetch Request
@@ -42,13 +76,17 @@ const App = () => {
     if (acidityFilter){
       setFilteredBeers(filteredBeers.filter((beer) => {return (beer.ph && beer.ph < ph)}));
     }
+
+    if(sort){
+      sortFunction(filteredBeers);
+    }
   };
 
   //Run this func on first render and whenever a filter is toggled
   useEffect(() => {
     getBeers(searchTerm, 6, 4, 45, "01-2010");
   // eslint-disable-next-line
-  }, [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter]);
+  }, [searchTerm, ABVFilter, acidityFilter, bitterFilter, classicFilter, sort]);
 
 
   return (
@@ -62,6 +100,7 @@ const App = () => {
         handleAcidityCheck={handleAcidityCheck}
         handleBitterCheck={handleBitterCheck}
         handleClassicCheck={handleClassicCheck}
+        sortBy={handleSort}
       />
 
       <BeerCardsContainer beerList={filteredBeers} />
