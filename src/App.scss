@@ -1,10 +1,5 @@
 @use "./assets/sass/_variables.scss" as *;
-
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+@import "./assets/sass/reset";
 
 .app {
   display: flex;
@@ -35,13 +30,6 @@
     width: 100%;
     min-height: 75vh;
     padding: 0.5rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-wrap: wrap;
-
-    background-image: url("./assets/images/ice-cubes.jpg");
   }
 }
 
@@ -53,10 +41,6 @@
       "head head"
       "navi cards"
     ;
-
-    font-family: $font-body;
-    text-align: center;
-    color: $colour-black;
 
     .header-section{
       grid-area: head;
@@ -73,12 +57,7 @@
 
     .cards-section{
       grid-area: cards;
-
       height: 87.5vh;
-      overflow-y: scroll;
-      padding: 0.5rem;
-
-      justify-content: flex-start;
     }
   }
 }
