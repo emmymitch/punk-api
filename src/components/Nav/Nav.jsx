@@ -3,7 +3,7 @@ import SearchBox from "../SearchBox/SearchBox";
 import Filter from "../Filter/Filter";
 import SortBox from "../SortBox/SortBox";
 
-const Nav = ({searchTerm, handleSearchInput, handleABVCheck, handleAcidityCheck, handleBitterCheck, handleClassicCheck, sortBy}) => {
+const Nav = ({searchTerm, handleSearchInput, handleABVCheck, handleAcidityCheck, handleBitterCheck, handleClassicCheck, sortBy, sortDirection}) => {
 
     return(
         <div className="nav-section">
@@ -18,7 +18,11 @@ const Nav = ({searchTerm, handleSearchInput, handleABVCheck, handleAcidityCheck,
                 <Filter filterLabel="Bitter (IBU > 45) "  handleFilter={handleBitterCheck} />
             </div>
 
-            <SortBox sortBy={sortBy} options={["", "Alphabetical", "ABV", "First Brewed", "IBU", "pH"]} />
+            <div className="sort-list">
+                <SortBox label="Sort by:" sort={sortBy} options={["", "Alphabetical", "ABV", "First Brewed", "IBU", "pH"]} />
+                <SortBox label="Direction:" sort={sortDirection} options={["Highest - Lowest", "Lowest - Highest"]} />
+            </div>
+
         </div>
     )
 }
