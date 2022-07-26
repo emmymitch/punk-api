@@ -1,7 +1,6 @@
 import "./BeerCard.scss";
 
 const BeerCard = ({beer}) => {
-    // const cardsToShow = beerList.map((beer) => {
 
     let tagline = beer.tagline;
     if (tagline[tagline.length -1] === "."){
@@ -37,9 +36,6 @@ const BeerCard = ({beer}) => {
             </div>
         </div>
     )
-    //})
-
-    //return cardsToShow;
 }
 
 export default BeerCard;

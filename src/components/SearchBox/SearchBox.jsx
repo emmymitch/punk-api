@@ -4,7 +4,7 @@ import "./SearchBox.scss";
 const SearchBox = ({searchTerm, handleSearchInput}) => {
   return (
     <form className="search-box">
-      <label htmlFor="search" className="search-box__label">Search: </label>
+      <label htmlFor="search" className="search-box__label"><span className="bold">Search:</span></label>
       <input type="text" name="search" value={searchTerm} onInput={handleSearchInput} className="search-box__input"/>
     </form>
   );
