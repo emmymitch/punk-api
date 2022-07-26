@@ -19,4 +19,8 @@
             outline: 0.125rem $colour-card-top solid;
         }
     }
+
+    &__option{
+        text-align: left;
+    }
 }

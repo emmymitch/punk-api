@@ -1,0 +1,19 @@
+@use "../../assets/sass/_variables.scss" as *;
+
+.cards-section{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    background-image: url("../../assets/images/ice-cubes.jpg");
+}
+
+@media screen and (min-width: 992px) {
+    .cards-section{
+        overflow-y: scroll;
+        padding: 0.5rem;
+  
+        justify-content: flex-start;
+    }
+}
