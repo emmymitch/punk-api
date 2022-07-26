@@ -16,7 +16,7 @@ const App = () => {
 
   const [beers, setBeers] = useState([]);
   const [filteredBeers, setFilteredBeers] = useState([]);
-  let matchingbeers = filteredBeers;
+  //let matchingbeers = filteredBeers;
 
   //Filters function
   const checkBeerFilter = () => {
@@ -102,15 +102,20 @@ const App = () => {
 
     //If filters on, add appropriate parameter to API request
     if (ABVFilter){params.push(`&abv_gt=${abvVal}`)};
-    if (acidityFilter){params.push(`&ph_lt=${ph}`)};
+    //if (acidityFilter){params.push(`&ph_lt=${ph}`)};
     if (bitterFilter){params.push(`&ibu_gt=${ibu}`)};
     if (classicFilter){params.push(`&brewed_before=${classicDate}`)};
     if (searchTerm){params.push(`&beer_name=${searchTerm}`)}
-
+    console.log(params)
     const response = await fetch(`https://api.punkapi.com/v2/beers?${params.join("")}`);
     //setBeers(await response.json());
     //checkBeerFilter();
     setFilteredBeers(await response.json());
+
+    if (acidityFilter){
+      const matchingbeers = (filteredBeers.filter((beer) => {return (beer.ph && beer.ph < ph)}));
+      setFilteredBeers(matchingbeers);
+    }
   };
 
   //Run this func on first render only
