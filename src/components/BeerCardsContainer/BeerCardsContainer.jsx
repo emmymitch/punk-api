@@ -1,3 +1,4 @@
+import "./BeerCardsContainer.scss";
 import BeerCard from "../BeerCard/BeerCard";
 
 const BeerCardsContainer = ({beerList}) => {

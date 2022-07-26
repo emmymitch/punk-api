@@ -9,18 +9,20 @@ import BeerCardsContainer from './components/BeerCardsContainer/BeerCardsContain
 const App = () => {
   //Set initial states
   const [filteredBeers, setFilteredBeers] = useState([]);
-
   const [searchTerm, setSearchTerm] = useState("");
+
   const [ABVFilter, setABVFilter] = useState(false);
   const [acidityFilter, setAcidityFilter] = useState(false);
   const [bitterFilter, setBitterFilter] = useState(false);
   const [classicFilter, setClassicFilter] = useState(false);
+
   const [sort, setSort] = useState("");
   const [sortDirection, setSortDirection] = useState(""); 
 
 
   //Filter event functions
   const handleSearchInput = (event) => {setSearchTerm(event.target.value.toLowerCase())}
+
   const handleABVCheck = () => {setABVFilter(!ABVFilter)};
   const handleAcidityCheck = () => {setAcidityFilter(!acidityFilter)};
   const handleBitterCheck = () => {setBitterFilter(!bitterFilter)};
@@ -29,8 +31,10 @@ const App = () => {
   const handleSort = (event) => {setSort(event.target.value)};
   const handleSortDirection = (event) => {setSortDirection(event.target.value)};
 
+
+  //Sort function
   const sortBeers = (beerArray) => {
-    let sortedBeers = [...beerArray]
+    let sortedBeers = [...beerArray];
 
     if (sort === "Alphabetical"){
       sortedBeers = sortedBeers.sort((a, b) => {
@@ -58,7 +62,7 @@ const App = () => {
       sortedBeers = sortedBeers.sort((a, b) => a[lowercaseSort] - b[lowercaseSort]);
     }
 
-    return setFilteredBeers(sortedBeers)
+    return setFilteredBeers(sortedBeers);
   }
 
 
@@ -67,7 +71,7 @@ const App = () => {
     const params = [];
 
     //If filters on, add appropriate parameter to API request
-    if (searchTerm){params.push(`&beer_name=${searchTerm}`)}
+    if (searchTerm){params.push(`&beer_name=${searchTerm}`)};
     if (ABVFilter){params.push(`&abv_gt=${abvVal}`)};
     if (bitterFilter){params.push(`&ibu_gt=${ibu}`)};
     if (classicFilter){params.push(`&brewed_before=${classicDate}`)};
@@ -90,7 +94,7 @@ const App = () => {
     }
   };
 
-  //Run this func on first render and whenever a filter is toggled
+  //Run this func on first render and whenever a search/filter/sort is toggled
   useEffect(() => {
     getBeers(searchTerm, 6, 4, 45, "01-2010");
   // eslint-disable-next-line
