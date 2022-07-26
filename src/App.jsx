@@ -27,8 +27,8 @@ const App = () => {
   
   const handleSort = (event) => {setSort(event.target.value)};
 
-  const sortFunction = (inputArray) => {
-    let sortedBeers = [...inputArray]
+  const sortBeers = (beerArray) => {
+    let sortedBeers = [...beerArray]
 
     if (sort === ""){
       return setFilteredBeers(sortedBeers);
@@ -78,7 +78,7 @@ const App = () => {
     }
 
     if(sort){
-      sortFunction(filteredBeers);
+      sortBeers(filteredBeers);
     }
   };
 
