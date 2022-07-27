@@ -20,9 +20,11 @@ it("Should render complete correct sort dropdown", () => {
 
     expect(sortLabel).toBeInTheDocument();
     expect(sortInput).toBeInTheDocument();
-    sortOptions.forEach(option => {
+
+    sortOptions.forEach((option, i) => {
         expect(option).toBeInTheDocument();
-    })
+        expect(option.textContent).toBe(sortBoxOptions[i]);
+    });
 });
 
 it("Should sort input on selection", () => {
