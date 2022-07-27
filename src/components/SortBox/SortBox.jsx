@@ -3,7 +3,7 @@ import "./SortBox.scss";
 const SortBox = ({options, sort, label}) => {
 
     const optionList = options.map((option) => {
-        return <option className="sort-box__option" value={option}>{option}</option>
+        return <option key={option} className="sort-box__option" value={option}>{option}</option>
     })
 
     return (
