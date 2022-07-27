@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/punk-api/static/css/main.bcb36ece.css",
-    "main.js": "/punk-api/static/js/main.55f3bb3f.js",
+    "main.css": "/punk-api/static/css/main.8949f8d7.css",
+    "main.js": "/punk-api/static/js/main.67de17aa.js",
     "static/js/787.ae7c3095.chunk.js": "/punk-api/static/js/787.ae7c3095.chunk.js",
-    "static/media/ice-cubes.jpg": "/punk-api/static/media/ice-cubes.f663605ca59136c5ecdb.jpg",
+    "static/media/ice-cubes.jpg": "/punk-api/static/media/ice-cubes.fa43f0833731f594cb38.jpg",
     "index.html": "/punk-api/index.html",
-    "main.bcb36ece.css.map": "/punk-api/static/css/main.bcb36ece.css.map",
-    "main.55f3bb3f.js.map": "/punk-api/static/js/main.55f3bb3f.js.map",
+    "main.8949f8d7.css.map": "/punk-api/static/css/main.8949f8d7.css.map",
+    "main.67de17aa.js.map": "/punk-api/static/js/main.67de17aa.js.map",
     "787.ae7c3095.chunk.js.map": "/punk-api/static/js/787.ae7c3095.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.bcb36ece.css",
-    "static/js/main.55f3bb3f.js"
+    "static/css/main.8949f8d7.css",
+    "static/js/main.67de17aa.js"
   ]
 }
