@@ -8,7 +8,7 @@ const SortBox = ({options, sort, label}) => {
 
     return (
         <form className="sort-box">
-            <label htmlFor={label}><span className="bold sort-box__label">{label}</span></label>
+            <label className="sort-box__label" htmlFor={label}><span className="bold">{label}</span></label>
             <select className="sort-box__list" onChange={sort} name={label}>
                 {optionList}
             </select>
