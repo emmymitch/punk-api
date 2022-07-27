@@ -6,7 +6,9 @@
     align-items: flex-start;
     flex-wrap: wrap;
 
-    background: #ffffff url("../../assets/images/ice-cubes.jpg") repeat fixed;
+    background-image: url("../../assets/images/ice-cubes.jpg");
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 @media screen and (min-width: 992px) {
