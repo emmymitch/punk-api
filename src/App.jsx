@@ -67,6 +67,13 @@ const App = () => {
       beersToRender = beersToRender.filter((beer) => {return (beer.ph && beer.ph < ph)});
     }
 
+    //API search matches letters, so this func checks the results for the whole string
+    if (params.includes(`&beer_name=${searchTerm}`)){
+      beersToRender = beersToRender.filter((beer) => {
+        return beer.name.toLowerCase().includes(searchTerm.toLowerCase())
+      });
+    }
+
     if(sort){
       beersToRender = sortBeers(beersToRender, sort);
     }
