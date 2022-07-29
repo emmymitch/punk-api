@@ -1,7 +1,7 @@
 import "./Nav.scss";
 import SearchBox from "../SearchBox/SearchBox";
 import Filter from "../Filter/Filter";
-import SortBox from "../SortBox/SortBox";
+import Dropdown from "../Dropdown/Dropdown";
 
 const Nav = ({  searchTerm,
                 handleSearchInput, 
@@ -13,13 +13,15 @@ const Nav = ({  searchTerm,
                 sortDirection,
                 prevPage,
                 pageNumber,
-                nextPage}) => {
+                nextPage,
+                changeBeersPerPage}) => {
 
     return(
         <div className="nav-section">
             <h2>Find Your Beer</h2>
+            <Dropdown label="Results per page:" func={changeBeersPerPage} options={[5, 10, 25, 50, 80]} />
             <SearchBox label="searchBox" searchTerm={searchTerm} handleSearchInput={handleSearchInput} />
-
+            
             <p className="bold">Filters:</p>
             <div className="filter-list">
                 <Filter filterLabel="High Alcohol Content (ABV > 6%) "  handleFilter={handleABVCheck} />
@@ -29,8 +31,8 @@ const Nav = ({  searchTerm,
             </div>
 
             <div className="sort-list">
-                <SortBox label="Sort by:" sort={sortBy} options={["", "Alphabetical", "ABV", "First Brewed", "IBU", "pH"]} />
-                <SortBox label="Direction:" sort={sortDirection} options={["Lowest - Highest", "Highest - Lowest"]} />
+                <Dropdown label="Sort page by:" func={sortBy} options={["", "Alphabetical", "ABV", "First Brewed", "IBU", "pH"]} />
+                <Dropdown label="Direction:" func={sortDirection} options={["Lowest - Highest", "Highest - Lowest"]} />
             </div>
 
             <div className="page">

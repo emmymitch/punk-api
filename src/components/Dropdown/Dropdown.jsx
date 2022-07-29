@@ -1,6 +1,6 @@
-import "./SortBox.scss";
+import "./Dropdown.scss";
 
-const SortBox = ({options, sort, label}) => {
+const Dropdown = ({options, func, label}) => {
 
     const optionList = options.map((option) => {
         return <option key={option} className="sort-box__option" value={option}>{option}</option>
@@ -9,7 +9,7 @@ const SortBox = ({options, sort, label}) => {
     return (
         <form className="sort-box">
             <label className="sort-box__label" htmlFor={label}><span className="bold">{label}</span></label>
-            <select className="sort-box__list" onChange={sort} name={label}>
+            <select className="sort-box__list" onChange={func} name={label}>
                 {optionList}
             </select>
         </form>
@@ -17,4 +17,4 @@ const SortBox = ({options, sort, label}) => {
     )
 };
 
-export default SortBox;
+export default Dropdown;

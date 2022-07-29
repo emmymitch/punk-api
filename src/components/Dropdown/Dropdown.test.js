@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import SortBox from "./SortBox";
+import Dropdown from "./Dropdown.";
 
 let sortBoxOptions = ["option1", "option2", "option3"];
 let sortBoxNumbers = [2, 6, 3, 8, 4];
@@ -8,7 +8,7 @@ let sortBoxNumbers = [2, 6, 3, 8, 4];
 const TestSortBox = () => {
     //For this test, a basic sort is defined as we are testing that it works, not a specific sort
     const testSort = () => {return sortBoxNumbers = sortBoxNumbers.sort()};
-    return <SortBox options={sortBoxOptions} sort={testSort} label="label" />
+    return <Dropdown options={sortBoxOptions} sort={testSort} label="label" />
 }
 
 it("Should render complete correct sort dropdown", () => {

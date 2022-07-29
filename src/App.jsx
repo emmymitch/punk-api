@@ -22,6 +22,7 @@ const App = () => {
   const [sortDirection, setSortDirection] = useState(""); 
 
   const [pageNumber, setPageNumber] = useState(1);
+  const [beersPerPage, setBeersPerPage] = useState(5);
 
 
   //Filter event functions
@@ -36,7 +37,8 @@ const App = () => {
   const handleSortDirection = (event) => {setSortDirection(event.target.value)};
 
 
-  //Functions to change page
+  //Pagination functions
+  const changeBeersPerPage = (event) => {setBeersPerPage(event.target.value)};
   const nextPage = () => {setPageNumber(pageNumber + 1)};
   const prevPage = () => {
     if (pageNumber === 1){
@@ -49,7 +51,7 @@ const App = () => {
 
   //API Fetch Request
   const getBeers = async (searchTerm, abvVal, ph, ibu, classicDate) => {
-    const params = [`&per_page=25`, `&page=${pageNumber}`];
+    const params = [`&per_page=${beersPerPage}`, `&page=${pageNumber}`];
 
     //If filters on, add appropriate parameter to API request
     if (searchTerm){params.push(`&beer_name=${searchTerm}`)};
@@ -58,21 +60,23 @@ const App = () => {
     if (classicFilter){params.push(`&brewed_before=${classicDate}`)};
 
     const response = await fetch(`https://api.punkapi.com/v2/beers?${params.join("")}`);
-    setFilteredBeers(await response.json());
+    let beersToRender = await response.json();
 
     //pH filter not available in API so manually filter results
     if (acidityFilter){
-      setFilteredBeers(filteredBeers.filter((beer) => {return (beer.ph && beer.ph < ph)}));
+      beersToRender = beersToRender.filter((beer) => {return (beer.ph && beer.ph < ph)});
     }
 
     if(sort){
-      setFilteredBeers(sortBeers(filteredBeers, sort));
+      beersToRender = sortBeers(beersToRender, sort);
     }
 
     //By default, API gives lowest-highest
     if(sortDirection === "Highest - Lowest"){
-      setFilteredBeers([...filteredBeers.reverse()]);
+      beersToRender = [...beersToRender.reverse()];
     }
+
+    setFilteredBeers(beersToRender);
   };
 
   //Run this func on first render and whenever a search/filter/sort is toggled
@@ -86,7 +90,8 @@ const App = () => {
       classicFilter, 
       sort, 
       sortDirection,
-      pageNumber
+      pageNumber,
+      beersPerPage
     ]);
 
 
@@ -106,6 +111,7 @@ const App = () => {
         prevPage={prevPage}
         pageNumber={pageNumber}
         nextPage={nextPage}
+        changeBeersPerPage={changeBeersPerPage}
       />
 
       <BeerCardsContainer beerList={filteredBeers} />

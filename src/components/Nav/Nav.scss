@@ -14,7 +14,7 @@
     line-height: 200%;
 
     h2{
-        margin-bottom: 1.25rem;
+        margin-bottom: 0.5rem;
     }
 
     .filter-list{
@@ -36,9 +36,10 @@
         display: grid;
         grid-template-columns: repeat(3, 3rem);
         justify-items: center;
+        align-items: center;
         
         & * {
-            margin: 1rem;
+            margin: 0.25rem 0rem;
         }
 
         &__button{
