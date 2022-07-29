@@ -31,4 +31,26 @@
         flex-direction: column;
         align-items: flex-end;
     }
+
+    .page{
+        display: grid;
+        grid-template-columns: repeat(3, 3rem);
+        justify-items: center;
+        
+        & * {
+            margin: 1rem;
+        }
+
+        &__button{
+            background: none;
+            border: none;
+
+            color: $colour-white;
+            cursor: pointer;
+        }
+
+        &__number{
+            font-size: 1.25rem;
+        }
+    }
 }

@@ -1,5 +1,5 @@
 import './App.scss';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Header from './components/Header/Header';
 import Nav from './components/Nav/Nav';
@@ -21,6 +21,8 @@ const App = () => {
   const [sort, setSort] = useState("");
   const [sortDirection, setSortDirection] = useState(""); 
 
+  const [pageNumber, setPageNumber] = useState(1);
+
 
   //Filter event functions
   const handleSearchInput = (event) => {setSearchTerm(event.target.value.toLowerCase())}
@@ -34,9 +36,20 @@ const App = () => {
   const handleSortDirection = (event) => {setSortDirection(event.target.value)};
 
 
+  //Functions to change page
+  const nextPage = () => {setPageNumber(pageNumber + 1)};
+  const prevPage = () => {
+    if (pageNumber === 1){
+      return;
+    } else{
+      setPageNumber(pageNumber - 1);
+    }
+  };
+
+
   //API Fetch Request
   const getBeers = async (searchTerm, abvVal, ph, ibu, classicDate) => {
-    const params = [];
+    const params = [`&per_page=25`, `&page=${pageNumber}`];
 
     //If filters on, add appropriate parameter to API request
     if (searchTerm){params.push(`&beer_name=${searchTerm}`)};
@@ -44,7 +57,7 @@ const App = () => {
     if (bitterFilter){params.push(`&ibu_gt=${ibu}`)};
     if (classicFilter){params.push(`&brewed_before=${classicDate}`)};
 
-    const response = await fetch(`https://api.punkapi.com/v2/beers?per_page=80${params.join("")}`);
+    const response = await fetch(`https://api.punkapi.com/v2/beers?${params.join("")}`);
     setFilteredBeers(await response.json());
 
     //pH filter not available in API so manually filter results
@@ -72,7 +85,8 @@ const App = () => {
       bitterFilter, 
       classicFilter, 
       sort, 
-      sortDirection
+      sortDirection,
+      pageNumber
     ]);
 
 
@@ -89,6 +103,9 @@ const App = () => {
         handleClassicCheck={handleClassicCheck}
         sortBy={handleSort}
         sortDirection={handleSortDirection}
+        prevPage={prevPage}
+        pageNumber={pageNumber}
+        nextPage={nextPage}
       />
 
       <BeerCardsContainer beerList={filteredBeers} />
