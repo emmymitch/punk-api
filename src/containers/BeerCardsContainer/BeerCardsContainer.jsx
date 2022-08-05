@@ -1,5 +1,5 @@
 import "./BeerCardsContainer.scss";
-import BeerCard from "../BeerCard/BeerCard";
+import BeerCard from "../../components/BeerCard/BeerCard";
 
 const BeerCardsContainer = ({beerList}) => {
     const cardsToShow = beerList.map((beer) => {

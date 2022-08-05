@@ -1,9 +1,9 @@
 import './App.scss';
 import { useState, useEffect } from 'react';
 
-import Header from './components/Header/Header';
-import Nav from './components/Nav/Nav';
-import BeerCardsContainer from './components/BeerCardsContainer/BeerCardsContainer';
+import Header from './containers/Header/Header';
+import Nav from './containers/Nav/Nav';
+import BeerCardsContainer from './containers/BeerCardsContainer/BeerCardsContainer';
 
 import sortBeers from './services/sortBeers';
 
