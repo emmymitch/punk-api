@@ -11,31 +11,31 @@ import sortBeers from './services/sortBeers';
 const App = () => {
   //Set initial states
   const [filteredBeers, setFilteredBeers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
 
   const [filter, setFilter] = useState({
+    search: "",
     abv: false, 
     ph: false, 
     ibu: false, 
-    classic: false})
-
-  const [sort, setSort] = useState("");
-  const [sortDirection, setSortDirection] = useState(""); 
+    classic: false,
+    sort: "",
+    sortDirection: ""
+  })
 
   const [pageNumber, setPageNumber] = useState(1);
   const [beersPerPage, setBeersPerPage] = useState(5);
 
 
   //Filter event functions
-  const handleSearchInput = (event) => {setSearchTerm(event.target.value.toLowerCase())}
+  const handleSearchInput = (event) => {setFilter({...filter, search: event.target.value.toLowerCase()})};
 
-  const handleABVCheck = () => {setFilter({...filter, abv: !filter.abv})}
-  const handleAcidityCheck = () => {setFilter({...filter, ph: !filter.ph})}
-  const handleBitterCheck = () => {setFilter({...filter, ibu: !filter.ibu})}
-  const handleClassicCheck = () => {setFilter({...filter, classic: !filter.classic})}
+  const handleABVCheck = () => {setFilter({...filter, abv: !filter.abv})};
+  const handleAcidityCheck = () => {setFilter({...filter, ph: !filter.ph})};
+  const handleBitterCheck = () => {setFilter({...filter, ibu: !filter.ibu})};
+  const handleClassicCheck = () => {setFilter({...filter, classic: !filter.classic})};
 
-  const handleSort = (event) => {setSort(event.target.value)};
-  const handleSortDirection = (event) => {setSortDirection(event.target.value)};
+  const handleSort = (event) => {setFilter({...filter, sort: event.target.value})};
+  const handleSortDirection = (event) => {setFilter({...filter, sortDirection: event.target.value})};
 
 
   //Pagination functions
@@ -75,12 +75,12 @@ const App = () => {
       });
     }
 
-    if(sort){
-      beersToRender = sortBeers(beersToRender, sort);
+    if(filter.sort){
+      beersToRender = sortBeers(beersToRender, filter.sort);
     }
 
     //By default, API gives lowest-highest
-    if(sortDirection === "Highest - Lowest"){
+    if(filter.sortDirection === "Highest - Lowest"){
       beersToRender = [...beersToRender.reverse()];
     }
 
@@ -89,17 +89,17 @@ const App = () => {
 
   //Run this func on first render and whenever a search/filter/sort is toggled
   useEffect(() => {
-    getBeers(searchTerm, 6, 4, 45, "01-2010");
+    getBeers(filter.search, 6, 4, 45, "01-2010");
 // eslint-disable-next-line
-  },[ searchTerm,
-      sort, 
-      sortDirection,
-      pageNumber,
-      beersPerPage,
+  },[ filter.search,
       filter.abv,
       filter.ph,
       filter.ibu,
-      filter.classic
+      filter.classic,
+      filter.sort,
+      filter.sortDirection,
+      pageNumber,
+      beersPerPage
     ]);
 
 
@@ -108,7 +108,7 @@ const App = () => {
       <Header />
 
       <Nav 
-        searchTerm={searchTerm} 
+        searchTerm={filter.search} 
         handleSearchInput={handleSearchInput} 
         handleABVCheck={handleABVCheck} 
         handleAcidityCheck={handleAcidityCheck}
@@ -120,7 +120,6 @@ const App = () => {
         pageNumber={pageNumber}
         nextPage={nextPage}
         changeBeersPerPage={changeBeersPerPage}
-        filter={filter}
       />
 
       <BeerCardsContainer beerList={filteredBeers} />
