@@ -5,10 +5,10 @@ const BeerCardsContainer = ({beerList}) => {
     const cardsToShow = beerList.map((beer) => {
         return <BeerCard beer={beer} />
     });
-    
+
     return(    
         <section className='cards-section'>
-            {cardsToShow}
+            {cardsToShow.length ? cardsToShow : <p className="no-beers">No beers found - check next page?</p> }
         </section>
     );
 };
