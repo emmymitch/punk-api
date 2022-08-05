@@ -9,6 +9,17 @@
     background-image: url("../../assets/images/ice-cubes.jpg");
     background-attachment: fixed;
     background-size: cover;
+
+    .no-beers{
+        margin: 1rem;
+        padding: 1rem;
+
+        background-color: rgba($colour-black, 65%);
+        border-radius: 1rem;
+        
+        font-size: 2rem;
+        color: $colour-white;
+    }
 }
 
 @media screen and (min-width: 992px) {

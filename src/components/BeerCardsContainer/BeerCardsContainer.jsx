@@ -8,7 +8,7 @@ const BeerCardsContainer = ({beerList}) => {
 
     return(    
         <section className='cards-section'>
-            {cardsToShow.length ? cardsToShow : <p className="no-beers">No beers found - check next page?</p> }
+            {cardsToShow.length ? cardsToShow : <p className="no-beers bold">No beers found - check other pages</p> }
         </section>
     );
 };
