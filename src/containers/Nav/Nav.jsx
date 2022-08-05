@@ -1,7 +1,7 @@
 import "./Nav.scss";
-import SearchBox from "../SearchBox/SearchBox";
-import Filter from "../Filter/Filter";
-import Dropdown from "../Dropdown/Dropdown";
+import SearchBox from "../../components/SearchBox/SearchBox";
+import Filter from "../../components/Filter/Filter";
+import Dropdown from "../../components/Dropdown/Dropdown";
 
 const Nav = ({  searchTerm,
                 handleSearchInput, 
