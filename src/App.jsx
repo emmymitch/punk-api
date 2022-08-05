@@ -22,11 +22,11 @@ const App = () => {
     sortDirection: ""
   })
 
-  const [pageNumber, setPageNumber] = useState(1);
-  const [beersPerPage, setBeersPerPage] = useState(5);
+  const [pagination, setPagination] = useState({pageNumber: 1, beersPerPage: 5});
 
 
-  //Filter event functions
+  //Filter functions
+  //setFilter to a copy of {filter} with the appropriate value change
   const handleSearchInput = (event) => {setFilter({...filter, search: event.target.value.toLowerCase()})};
 
   const handleABVCheck = () => {setFilter({...filter, abv: !filter.abv})};
@@ -39,20 +39,20 @@ const App = () => {
 
 
   //Pagination functions
-  const changeBeersPerPage = (event) => {setBeersPerPage(event.target.value)};
-  const nextPage = () => {setPageNumber(pageNumber + 1)};
+  const changeBeersPerPage = (event) => {setPagination({...pagination, beersPerPage: event.target.value})};
+  const nextPage = () => {setPagination({...pagination, pageNumber: (pagination.pageNumber + 1)})};
   const prevPage = () => {
-    if (pageNumber === 1){
+    if (pagination.pageNumber === 1){
       return;
     } else{
-      setPageNumber(pageNumber - 1);
+      setPagination({...pagination, pageNumber: (pagination.pageNumber - 1)});
     }
   };
 
 
   //API Fetch Request
   const getBeers = async (searchTerm, abvVal, ph, ibu, classicDate) => {
-    const params = [`&per_page=${beersPerPage}`, `&page=${pageNumber}`];
+    const params = [`&per_page=${pagination.beersPerPage}`, `&page=${pagination.pageNumber}`];
 
     //If filters on, add appropriate parameter to API request
     if (searchTerm){params.push(`&beer_name=${searchTerm}`)};
@@ -98,8 +98,8 @@ const App = () => {
       filter.classic,
       filter.sort,
       filter.sortDirection,
-      pageNumber,
-      beersPerPage
+      pagination.pageNumber,
+      pagination.beersPerPage
     ]);
 
 
@@ -117,7 +117,7 @@ const App = () => {
         sortBy={handleSort}
         sortDirection={handleSortDirection}
         prevPage={prevPage}
-        pageNumber={pageNumber}
+        pageNumber={pagination.pageNumber}
         nextPage={nextPage}
         changeBeersPerPage={changeBeersPerPage}
       />
