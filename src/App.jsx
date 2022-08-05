@@ -13,10 +13,11 @@ const App = () => {
   const [filteredBeers, setFilteredBeers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const [ABVFilter, setABVFilter] = useState(false);
-  const [acidityFilter, setAcidityFilter] = useState(false);
-  const [bitterFilter, setBitterFilter] = useState(false);
-  const [classicFilter, setClassicFilter] = useState(false);
+  const [filter, setFilter] = useState({
+    abv: false, 
+    ph: false, 
+    ibu: false, 
+    classic: false})
 
   const [sort, setSort] = useState("");
   const [sortDirection, setSortDirection] = useState(""); 
@@ -28,11 +29,11 @@ const App = () => {
   //Filter event functions
   const handleSearchInput = (event) => {setSearchTerm(event.target.value.toLowerCase())}
 
-  const handleABVCheck = () => {setABVFilter(!ABVFilter)};
-  const handleAcidityCheck = () => {setAcidityFilter(!acidityFilter)};
-  const handleBitterCheck = () => {setBitterFilter(!bitterFilter)};
-  const handleClassicCheck = () => {setClassicFilter(!classicFilter)};
-  
+  const handleABVCheck = () => {setFilter({...filter, abv: !filter.abv})}
+  const handleAcidityCheck = () => {setFilter({...filter, ph: !filter.ph})}
+  const handleBitterCheck = () => {setFilter({...filter, ibu: !filter.ibu})}
+  const handleClassicCheck = () => {setFilter({...filter, classic: !filter.classic})}
+
   const handleSort = (event) => {setSort(event.target.value)};
   const handleSortDirection = (event) => {setSortDirection(event.target.value)};
 
@@ -55,15 +56,15 @@ const App = () => {
 
     //If filters on, add appropriate parameter to API request
     if (searchTerm){params.push(`&beer_name=${searchTerm}`)};
-    if (ABVFilter){params.push(`&abv_gt=${abvVal}`)};
-    if (bitterFilter){params.push(`&ibu_gt=${ibu}`)};
-    if (classicFilter){params.push(`&brewed_before=${classicDate}`)};
+    if (filter.abv){params.push(`&abv_gt=${abvVal}`)};
+    if (filter.ibu){params.push(`&ibu_gt=${ibu}`)};
+    if (filter.classic){params.push(`&brewed_before=${classicDate}`)};
 
     const response = await fetch(`https://api.punkapi.com/v2/beers?${params.join("")}`);
     let beersToRender = await response.json();
 
     //pH filter not available in API so manually filter results
-    if (acidityFilter){
+    if (filter.ph){
       beersToRender = beersToRender.filter((beer) => {return (beer.ph && beer.ph < ph)});
     }
 
@@ -90,15 +91,15 @@ const App = () => {
   useEffect(() => {
     getBeers(searchTerm, 6, 4, 45, "01-2010");
 // eslint-disable-next-line
-  },[ searchTerm, 
-      ABVFilter, 
-      acidityFilter, 
-      bitterFilter, 
-      classicFilter, 
+  },[ searchTerm,
       sort, 
       sortDirection,
       pageNumber,
-      beersPerPage
+      beersPerPage,
+      filter.abv,
+      filter.ph,
+      filter.ibu,
+      filter.classic
     ]);
 
 
@@ -119,6 +120,7 @@ const App = () => {
         pageNumber={pageNumber}
         nextPage={nextPage}
         changeBeersPerPage={changeBeersPerPage}
+        filter={filter}
       />
 
       <BeerCardsContainer beerList={filteredBeers} />
